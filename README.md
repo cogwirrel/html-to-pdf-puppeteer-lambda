@@ -1,14 +1,34 @@
-# Welcome to your CDK TypeScript project!
+# HTML to PDF Lambda using Puppeteer
 
-This is a blank project for TypeScript development with CDK.
+This is an example of mixing puppeteer, webpack and lambda to convert html to pdfs!
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+Makes use of:
+- https://github.com/shelfio/chrome-aws-lambda-layer/
+- https://github.com/alixaxel/chrome-aws-lambda
 
-## Useful commands
+It's a CDK project, and spins up a minimal api with IAM auth
 
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+## Bootstrap
+
+Just like a normal CDK project...
+
+`cdk boostrap`
+
+## Deploy
+
+```
+cd lambda
+npm ci && npm run build
+cd ..
+npm ci && npm run build
+cdk deploy
+```
+
+## Test
+
+Use `awscurl`:
+- https://github.com/okigan/awscurl
+
+```
+awscurl --service execute-api -X POST https://YOURAPI.execute-api.REGION.amazonaws.com/prod/html-to-pdf -d '{ "html": "<h1>Hello World</h1>" }'
+```
