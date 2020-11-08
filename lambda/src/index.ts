@@ -28,18 +28,24 @@ const toPdf = async (html: string, browser: Browser) => {
 };
 
 export const handler = async (event: any, context: any) => {
-    // Create puppeteer browser
-    const browser: Browser = await chrome.puppeteer.launch({
-        args: chrome.args,
-        defaultViewport: chrome.defaultViewport,
-        executablePath: await chrome.executablePath,
-        headless: chrome.headless,
-        ignoreHTTPSErrors: true,
-    });
+    try {
+        // Create puppeteer browser
+        const browser: Browser = await chrome.puppeteer.launch({
+            args: chrome.args,
+            defaultViewport: chrome.defaultViewport,
+            executablePath: await chrome.executablePath,
+            headless: chrome.headless,
+            ignoreHTTPSErrors: true,
+        });
 
-    // Convert given html string to a base64 encoded pdf string
-    const { html } = JSON.parse(event.body);
-    const pdf = await toPdf(html, browser);
+        // Convert given html string to a base64 encoded pdf string
+        const html = event.body;
+        const pdf = await toPdf(html, browser);
 
-    return respond(200, { pdf });
+        return respond(200, { pdf });
+    } catch (e) {
+        return respond(400, {
+            message: e.errorMessage || e.message || e.toString()
+        });
+    }
 };

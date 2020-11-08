@@ -30,5 +30,5 @@ Use `awscurl`:
 - https://github.com/okigan/awscurl
 
 ```
-awscurl --service execute-api -X POST https://YOURAPI.execute-api.REGION.amazonaws.com/prod/html-to-pdf -d '{ "html": "<h1>Hello World</h1>" }'
+awscurl --service execute-api -X POST https://YOURAPI.execute-api.REGION.amazonaws.com/prod/html-to-pdf -d '<h1>Hello World</h1>'
 ```
